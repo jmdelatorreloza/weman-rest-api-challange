@@ -49,6 +49,29 @@ const BooksController = {
     .catch( err => {
       res.status(500).send({message: "Ya valio maiz"}).end();
     });
+  },
+  updateBook: (req, res) => {
+    if(req.body.title && req.body.author && req.body.pageNumber && req.params.id) {
+      const title = req.body.title;
+      const author = req.body.author;
+      const pageNumber = req.body.pageNumber;
+      BookModel
+      .findOneAndUpdate({
+        _id: req.params.id
+      }, {
+        title,
+        author,
+        pageNumber
+      })
+      .then( data => {
+        res.status(200).send({data}).end();
+      })
+      .catch( err => {
+        res.status(500).send({message: "Ya valio maiz"}).end();
+      })
+    } else {
+      res.status(400).send({message: "Manda el ID! y tambien title, author y pageNumber para actualizar un libro"});
+    }
   }
 };
 
