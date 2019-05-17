@@ -32,7 +32,7 @@ Si no es asi, revisa los pasos anteriores y asegurate de tener mongodb corriendo
 * Las funciones "handler" de las rutas deben existir en algun archivo de la carpeta de controladores e importarlos al archivo index.js para usarlas
 * Los modelos solo se pueden usar dentro de archivos de la carpeta de controladores
 * Ningun archivo de la carpeta models necesita tiene que ser editado
-* La carpeta models_use tiene ejemplo de codigo que necesitaran usar en sus controladores para, leer, escrivir, actualizar y borrar registros, pero estos archivos no tienen que ser editados! solo son para que hagan copy/paste.
+* La carpeta models_use tiene ejemplo de codigo que necesitaran usar en sus controladores para, leer, escribir, actualizar y borrar registros, pero estos archivos no tienen que ser editados! solo son para que hagan copy/paste.
 * los middleware que necesitemos codear nosotros, tendran que estar en el folder de middleawares, y haremos uso de ellos en index.js similiar a los controladores
 * los archivos controlador tendran que tener la terminacino .controller.js, los archivos middleware tendran que tener la terminacion .middlware.js
 
@@ -48,7 +48,7 @@ El flujo de trabajo sera el siguiente
 
 
 ### TO DO:
-- [ ] crear endpoint para leer libros
+- [x] crear endpoint para leer libros
 - [ ] crear endpoint para crear libros
 - [ ] crear endpoint para leer un libro
 - [ ] crear endpoint para sobre escribir libros
