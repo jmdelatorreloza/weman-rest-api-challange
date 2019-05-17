@@ -15,6 +15,9 @@ app.use(authMiddleware.authMiddleware);
 
 app.get('/books', booksController.readBooks);
 app.get('/books/:id', booksController.readBook);
+
+app.use(authMiddleware.checkAdmin);
+
 app.post('/books', booksController.createBook);
 app.put('/books/:id', booksController.updateBook);
 app.delete('/books/:id', booksController.deleteBook);
