@@ -44,7 +44,7 @@ const BooksController = {
   },
   readABook: (req, res) => {
     // Leer un solo libro
-    let id = req.body.id;
+    let id = req.params.id;
     BookModel
       .findOne({ _id: id })
       .then(data => {
@@ -53,7 +53,7 @@ const BooksController = {
           res.status(200).send({ data: data }).end();
         } else {
           // codigo para cuando no encontramos el libro
-          res.status(400).send({ message: "No se encontró" });
+          res.status(404).send({ message: "No se encontró" });
         }
       })
       .catch(err => {
@@ -63,7 +63,7 @@ const BooksController = {
 
   },
   updateBook: (req, res) => {
-    if (!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
+    if (!(req.params.title && req.params.author && req.params.pageNumber && req.params.id)) {
       res.status(400).send({ message: "Necesitas enviar título, autor y número de página" });
     } else {
       const id = req.body.id;
@@ -72,7 +72,7 @@ const BooksController = {
       const pageNumber = req.body.pageNumber;
       BookModel
         .findOneAndUpdate({
-          _id: id
+          _id: req.params.id
         }, {
             title,
             author,
@@ -91,9 +91,9 @@ const BooksController = {
   },
   deleteBook: (req, res) => {
     // Borrar un libro
-    let id = req.body.id;
-    if (req.body.id !== id) {
-      res.status(400).send({ message: "No se encontró el id" });
+    let id = req.params.id;
+    if (req.params.id !== id) {
+      res.status(404).send({ message: "No se encontró el id" });
     } else {
       BookModel
         .deleteOne({ _id: id })
@@ -106,20 +106,6 @@ const BooksController = {
           res.status(500).send({ error: "Falló la creación del libro" });
         });
     }
-  },
-
-  authBook: (req, res) => {
-    const privateKey = 'llave';
-    if (!(req.body.user && req.body.pass)) {
-      res.status(400).send('Necesitas introducir usuario y contraseña');
-    }
-    jwt.sign({ user: request.body.user, theme: 'black' }, privateKey, function (err, token) {
-      if (err) {
-        res.send(500).end();
-      } else {
-        res.status(200).send({ token: token })
-      }
-    });
   }
 };
 

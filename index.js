@@ -2,19 +2,16 @@ const express = require('express')
 const app = express()
 const port = 3000
 const db = require('./db');
-const bodyParser = require ('body-parser');
-const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const booksController = require('./controllers/books.controller');
-const jwt = require('jsonwebtoken');
+const authController = require('./controllers/auth.controller');
 app.use(bodyParser.json());
-app.use(cookieParser());
 
-app.use(bodyParser());
+app.post('/auth/singin', authController.authBook);
 app.get('/books', booksController.readBooks);
+app.get('/books/findBook/:id', booksController.readABook);
 app.post('/books', booksController.createBook);
-app.get('/books/findBook', booksController.readABook);
-app.put('/books', booksController.updateBook);
-app.delete('/books', booksController.deleteBook);
-app.post('books/auth', booksController.authBook);
+app.put('/books/:id', booksController.updateBook);
+app.delete('/books/:id', booksController.deleteBook);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
