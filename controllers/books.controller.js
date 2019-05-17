@@ -88,6 +88,25 @@ const BooksController = {
           res.status(500).send({ error: "Falló la creación del libro" });
         })
     }
+  },
+  deleteBook: (req, res) => {
+    // Borrar un libro
+    let id = req.body.id;
+    if (req.body.id !== id) {
+      res.status(400).send({ message: "No se encontró el id" });
+    } else {
+      BookModel
+        .deleteOne({ _id: id })
+        .then(data => {
+          // codigo para cuando se borra el libro
+          res.status(200).send({ data: data }).end();
+        })
+        .catch(err => {
+          // codigo por si falla la peticion a la base de datos
+          res.status(500).send({ error: "Falló la creación del libro" });
+        });
+
+    }
   }
 };
 
