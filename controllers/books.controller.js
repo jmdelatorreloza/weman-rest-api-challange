@@ -42,7 +42,7 @@ const BooksController = {
   },
 
   read1Book: (req, res)=>{
-    let id = "algo para leer las id que me genera automáticamente"
+    let id = req.body.id
     BookModel
     .findOne({_id: id})
     .then( data => {
@@ -51,13 +51,14 @@ const BooksController = {
         res.status(404).send({mesage:'Ese libro no existe'})
       } else {
         // codigo para cuando no encontramos el libro
-        res.status(200).send({mesage:id})
+        res.status(200).send({mesage:data})
       }
     })
     .catch( err => {
       // codigo por si falla la peticion a la base de datos
     });
   },
+  
 };
 
 module.exports = BooksController;
