@@ -72,6 +72,20 @@ const BooksController = {
     } else {
       res.status(400).send({message: "Manda el ID! y tambien title, author y pageNumber para actualizar un libro"});
     }
+  },
+  deleteBook: (req, res) => {
+    if(req.params.id) {
+      BookModel
+      .deleteOne({_id: req.params.id})
+      .then( data => {
+        res.status(200).send({message: "ya lo desapareci"})
+      })
+      .catch( err => {
+        res.status(500).send({message: "valio maizito"}).end();
+      });
+    } else {
+      res.status(400).send({message: "necesitas mandar el ID o te borro todo"})
+    }
   }
 };
 
