@@ -30,7 +30,7 @@ const BooksController = {
           res.status(200).send({data: data}).end();
         })
         .catch(err => {
-          res.status(500).send({message: "Morí :("})
+          res.status(500).send({message: "Morí creando :("})
         })
     } else {
       res.status(400).send({message:"Asegurate de incluir titulo, autor y número de página"})
@@ -48,9 +48,31 @@ const BooksController = {
       }
     })
   .catch( err => {
-    res.status(500).send({message: "La busqueda no salió bien"})// codigo por si falla la peticion a la base de datos
+    res.status(500).send({message: "Morí leyendo solo un libro :( "})// codigo por si falla la peticion a la base de datos
   });
-  } 
+  },
+  actualizar: (req,res) => {
+    if (!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
+      res.status(400).send({ Error: 'Asegurate de incluir titulo, autor y número de página' });
+    } else { 
+      const title = req.body.title;
+      const author = req.body.author;
+      const pageNumber = req.body.pageNumber;
+      const id = req.body.id;
+      BookModel
+        .findOneAndUpdate({_id: id}, {
+            title,
+            author,
+            pageNumber
+          })
+        .then(data => {
+          res.status(200).send({ data: data }).end(); // codigo para cuando se actualiza el libro
+        })
+        .catch(err => {
+          res.status(500).send({ message: "Morí actualizando :(" }); // codigo por si falla la peticion a la base de datos
+        })
+    }
+  },
 };
 
 module.exports = BooksController;
