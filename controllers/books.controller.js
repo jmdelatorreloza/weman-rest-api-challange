@@ -3,6 +3,7 @@ const BookModel = require('../models/books.model');
 const BooksController = {
 
   //función para ver TODOS los libros ingresados
+  //descargar el parseador e importarlo en index (require y como use.)
   readBooks: (req, res) => {
     BookModel //hace referencia a la base de datos.
       .find()
@@ -14,7 +15,7 @@ const BooksController = {
         }
       })
       .catch(err => {
-        res.status(500).send({ message: "Trono la Base de Datos! D:" })
+        res.status(500).send({ message: "Tronó la Base de Datos! D:" })
       });
   }, //separar funciones adentro de la constante con comas, NO PUNTO Y COMA
 
@@ -40,6 +41,9 @@ const BooksController = {
       res.status(400).send({ message: "Ponga bien los datos: título, autor y número de páginas" })
     }
   }
+
+  //función para buscar UN SOLO libro
+
 };
 
 module.exports = BooksController;
@@ -48,7 +52,7 @@ module.exports = BooksController;
 
 //http://localhost:3000/books en postman
 
-//Recordar cambiar a la opción BODY en postman y en método POST
+//Recordar cambiar a la opción BODY en postman y en método POST o GET dependiendo
 //(body se referencía en este archivo así: req.body.author, req.boyd.title, etc) 
 
 
