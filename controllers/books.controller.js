@@ -41,6 +41,26 @@ const BooksController = {
           res.status(500).send({ error: "Falló la creación del libro" });
         })
     }
+  },
+  readABook: (req, res) => {
+    // Leer un solo libro
+    let id = req.body.id;
+    BookModel
+      .findOne({ _id: id })
+      .then(data => {
+        if (data) {
+          // codigo para cuando encontramos el libro
+          res.status(200).send({ data: data }).end();
+        } else {
+          // codigo para cuando no encontramos el libro
+          res.status(400).send({ message: "No se encontró" });
+        }
+      })
+      .catch(err => {
+        // codigo por si falla la peticion a la base de datos
+        res.status(500).send({ error: "Falló la búsqueda" });
+      });
+
   }
 };
 
