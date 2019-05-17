@@ -2,6 +2,7 @@ const BookModel = require('../models/books.model');
 
 
 const BooksController = {
+  // Leer todos los libros
   readBooks: (req, res) => {
     BookModel
       .find()
@@ -41,6 +42,7 @@ const BooksController = {
     }
   },
 
+  // Encontrar y leer un libro
   readOneBook: (req, res) => {
     let id = req.body.id;
     BookModel
@@ -58,6 +60,7 @@ const BooksController = {
 
   },
 
+  // Sobre escribir un libro
   updateBook: (req, res) => {
     if (!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
       res.status(400).send({ Error: 'Ingresa todos los parametros!' });
@@ -83,6 +86,7 @@ const BooksController = {
     }
   },
 
+  // Borrar un libro con ID
   deleteBook: (req, res) => {
     let id = req.body.id;
     BookModel
