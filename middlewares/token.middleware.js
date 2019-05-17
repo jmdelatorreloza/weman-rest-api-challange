@@ -9,7 +9,6 @@ const AuthorizationMiddleware = {
                 if (err) {
                     res.status(400).send('Houston, we have a problem! cannor access, check your token')
                 } else {
-                    console.log(decoded)
                     // checar ese usuario en la base datos a ver si existe
                     next();
                 }
@@ -19,15 +18,15 @@ const AuthorizationMiddleware = {
         }
     },
 
-    admin:(req, res, next) => {
+    admin: (req, res, next) => {
         if (req.headers.authorization) {
             jwt.verify(req.headers.authorization, privateKey, function (err, decoded) {
                 if (err) {
                     res.status(400).send('Houston, we have a problem! cannot access, check your token')
                 } else {
-                    if(decoded.user === 'admin'){
-                         next();
-                    }else{
+                    if (decoded.user === 'admin') {
+                        next();
+                    } else {
                         res.status(403).send('No tienes permisos de ADMIN para entrar a esto!')
                     }
                 }

@@ -55,7 +55,7 @@ El flujo de trabajo sera el siguiente
 - [x] crear endpoint para borrar libros
 - [x] crear endpoint para autentificarnos
 - [X] crear middleware para revisar que el token sea valido
-- [ ] crear middleware pare revisar si el usuario es admin
+- [x] crear middleware pare revisar si el usuario es admin
 
 ### Especificaciones
 

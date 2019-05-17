@@ -43,7 +43,7 @@ const BooksController = {
 
   // Encontrar y leer un libro
   readOneBook: (req, res) => {
-    let id = req.param.id;
+    let id = req.params.id;
     BookModel
       .findOne({ _id: id })
       .then(data => {
@@ -87,18 +87,18 @@ const BooksController = {
 
   // Borrar un libro con ID
   deleteBook: (req, res) => {
-    if(req.params.id){
-    let id = req.params.id;
-    BookModel
-      .deleteOne({ _id: id })
-      .then(data => {
-        res.status(200).send({ message: "Libro borrado 4eva & eva!" }); //manda mensaje de borrado y el libro que se borro
-      })
-      .catch(err => {
-        res.status(500).send({ message: "Trono la Base de Datos! D:" });
-      });
-    }else{
-      res.status(400).send({message: "¡Oye! Revisa si mandas ID "})
+    if (req.params.id) {
+      let id = req.params.id;
+      BookModel
+        .deleteOne({ _id: id })
+        .then(data => {
+          res.status(200).send({ message: "Libro borrado 4eva & eva!" }); //manda mensaje de borrado y el libro que se borro
+        })
+        .catch(err => {
+          res.status(500).send({ message: "Trono la Base de Datos! D:" });
+        });
+    } else {
+      res.status(400).send({ message: "¡Oye! Revisa si mandas ID " })
     }
   }
 
