@@ -80,7 +80,22 @@ const BooksController = {
         res.status(500).send({messagge: "Ya valió D:"})
       })
       }    
+  },
+
+  deleteBooks: (req, res) => {
+    let id = req.body.id;
+    BookModel
+    .deleteOne({_id: id})
+    .then( data => {
+      res.status(200).send({message: "Tú libro ha sido eliminado"});
+      // codigo para cuando se borra el libro
+    })
+    .catch( err => {
+      res.status(500).send({message: "Ya valió D:"});
+      // codigo por si falla la peticion a la base de datos
+    });
   }
+
   };
 
 
