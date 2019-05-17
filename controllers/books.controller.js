@@ -47,20 +47,42 @@ console.log(req.body)
 Read1book: (req, res) => {
   let id = req.body.id;
 BookModel
-.findOne({_id: id})
+  .findOne({_id: id})
+  .then( data => {
+    if(data) {
+      // codigo para cuando encontramos el libro
+      res.status(201).send({data: data}).end();
+    } else {
+      // codigo para cuando no encontramos el libro
+      res.status(500).send({message: err});    
+    }
+  })
+  .catch( err => {
+    // codigo por si falla la peticion a la base de datos
+    res.status(400).send({mensaje: "not done, ingrea id"});
+  });
+},
+
+//endpoint para sobre escribir libros (actualizar)
+actualizarlibro: (req, res) => {
+  const title = req.body.title; 
+  const author = req.body.author; 
+  const pageNumber = req.body.pageNumber;  
+  const id = req.body.id;
+BookModel
+.findOneAndUpdate({_id: id}, {
+  title,
+  author,
+  pageNumber
+})
 .then( data => {
-  if(data) {
-    // codigo para cuando encontramos el libro
-    res.status(201).send({data: data}).end();
-  } else {
-    // codigo para cuando no encontramos el libro
-    res.status(500).send({message: err});    
-  }
+  // codigo para cuando se actualiza el libro
+  res.status(200).send({data: data}).end();
 })
 .catch( err => {
   // codigo por si falla la peticion a la base de datos
-  res.status(400).send({mensaje: "not done, ingrea id"});
-});
+  res.status(400).send({mensaje: "No se actualizó"});
+})
 }
 
 };
