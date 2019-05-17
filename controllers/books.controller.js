@@ -58,7 +58,23 @@ const BooksController = {
       // codigo por si falla la peticion a la base de datos
     });
   },
-  
+  overwriteBook:(req, res)=>{
+    const title = "test", author = "test", pageNumber = "test", id = "id del libro"
+    BookModel
+    .findOneAndUpdate({
+      _id: id
+    }, {
+      title,
+      author,
+      pageNumber
+    })
+    .then( data => {
+      // codigo para cuando se actualiza el libro
+    })
+    .catch( err => {
+      // codigo por si falla la peticion a la base de datos
+    })
+  }
 };
 
 module.exports = BooksController;
