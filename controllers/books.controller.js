@@ -36,8 +36,27 @@ const BooksController = {
     } else {
       res.status(400).send({messagge: "Está toda la información"})
       }
-  }
-};
-        
+  },
+
+  searchBooks: (req, res) => {
+      let id = req.body.id
+      BookModel
+      .findOne({_id: id})
+      .then( data => {
+        if(data) {
+          // codigo para cuando encontramos el libro
+          res.status(200).send({data : data}).end();
+        } else {
+          // codigo para cuando no encontramos el libro
+          res.status(400).send({message : "No lo encontramos"});
+        }
+      })
+      .catch( err => {
+        // codigo por si falla la peticion a la base de datos
+        res.status(500).send({error : "La busqueda no funcionó"});
+      });
+    }
+  };
+
 
 module.exports = BooksController;
