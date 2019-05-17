@@ -5,7 +5,7 @@ const port = 3000;
 const db = require('./db');
 const booksController = require('./controllers/books.controller');
 
-app.use(bodyParser);
+app.use(bodyParser.json());
 
 app.get('/books', booksController.readBooks);
 app.get('/books', booksController.createBook);

@@ -1,6 +1,5 @@
 const BookModel = require('../models/books.model');
 
-
 const BooksController = {
   readBooks: (req, res) => {
     BookModel
@@ -22,7 +21,7 @@ const BooksController = {
 
   createBook:(req, res)=>{
     if (req.body.title&&req.body.author&&req.body.pageNumber){
-      const title = "titulo", author = "autor", pageNumber = "noPages"
+      const title = req.body.title, author = req.body.author, pageNumber = req.body.pageNumber
       BookModel
       .create({
         title,
@@ -35,7 +34,7 @@ const BooksController = {
       })
       .catch( err => {
         // codigo para cuando falla la creacion del libro o la peticion a la base de datos
-        res.status(500).send({mesage:'no se pudo crear libro'})
+        res.status(500).send({err:'no se pudo crear libro'})
       })
     }else{
       res.status(400).send({mesage:'Datos incompletos, manda: título, autor y número de páginas'})
@@ -43,7 +42,7 @@ const BooksController = {
   },
 
   read1Book: (req, res)=>{
-    let id = "ISBN"
+    let id = "algo para leer las id que me genera automáticamente"
     BookModel
     .findOne({_id: id})
     .then( data => {
