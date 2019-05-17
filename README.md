@@ -48,7 +48,7 @@ El flujo de trabajo sera el siguiente
 
 
 ### TO DO:
-- [ ] crear endpoint para leer libros
+- [x] crear endpoint para leer libros
 - [ ] crear endpoint para crear libros
 - [ ] crear endpoint para leer un libro
 - [ ] crear endpoint para sobre escribir libros
