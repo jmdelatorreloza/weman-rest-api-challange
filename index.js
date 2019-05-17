@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 app.post('/auth/singin', authController.authBook);
 app.use(authMiddleware.authMiddleware);
+app.use(authMiddleware.checkAdmin);
 app.get('/books', booksController.readBooks);
 app.get('/books/findBook/:id', booksController.readABook);
 app.post('/books', booksController.createBook);
