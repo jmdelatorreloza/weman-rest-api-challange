@@ -9,5 +9,7 @@ app.use(bodyParser());
 
 app.get('/books', booksController.readBooks);
 app.post('/books', booksController.createBook);
+app.get('/books/find', booksController.readOneBook);
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))   

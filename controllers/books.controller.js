@@ -39,9 +39,24 @@ const BooksController = {
         })
 
     }
-  }
+  },
 
-  
+  readOneBook: (req,res) => {
+    let id = req.body.id;
+    BookModel
+    .findOne({_id: id})
+    .then( data => {
+      if(data) {
+        res.status(200).send({ data: data }).end();
+      } else {
+        res.status(400).send({ Error: 'No pudimos encontrar el libro, intenta otro ID' });
+      }
+    })
+    .catch( err => {
+      res.status(500).send({ message: "Trono la Base de Datos o la creación del libro! D:" });
+    });
+
+  }
 
 }
 module.exports = BooksController;
