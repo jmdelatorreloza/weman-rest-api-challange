@@ -41,21 +41,46 @@ const BooksController = {
     }
   },
 
-  readOneBook: (req,res) => {
+  readOneBook: (req, res) => {
     let id = req.body.id;
     BookModel
-    .findOne({_id: id})
-    .then( data => {
-      if(data) {
-        res.status(200).send({ data: data }).end();
-      } else {
-        res.status(400).send({ Error: 'No pudimos encontrar el libro, intenta otro ID' });
-      }
-    })
-    .catch( err => {
-      res.status(500).send({ message: "Trono la Base de Datos o la creación del libro! D:" });
-    });
+      .findOne({ _id: id })
+      .then(data => {
+        if (data) {
+          res.status(200).send({ data: data }).end();
+        } else {
+          res.status(400).send({ Error: 'No pudimos encontrar el libro, intenta otro ID' });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({ Message: "Trono la Base de Datos o la creación del libro! D:" });
+      });
 
+  },
+
+  updateBook: (req, res) => {
+    if (!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
+      res.status(400).send({ Error: 'Ingresa todos los parametros!' });
+    } else {
+    const title = req.body.title;
+    const author = req.body.author;
+    const pageNumber = req.body.pageNumber;
+    const id = req.body.id;
+    BookModel
+      .findOneAndUpdate({
+        _id: id
+      }, {
+          title,
+          author,
+          pageNumber
+        })
+      .then(data => {
+        res.status(201).send({ data: data }).end(); //regresa los datos del libro que se esta sobreescribiendo
+      })
+      .catch(err => {
+        res.status(500).send({ message: "Trono la Base de Datos! D:" });
+      })
+    }
   }
 
 }
