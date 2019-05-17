@@ -74,16 +74,29 @@ const BooksController = {
     }
   },
   eraseBook: (req, res) => {
-  let id = req.body.id;
-  BookModel
-  .deleteOne({_id: id})
-  .then( data => {
-   res.status(200).send({message: "Se ha borrado el libro :)"}); // codigo para cuando se borra el libro
-  })
-  .catch( err => {
-    res.status(500).send({message: "Morí borrando libros u.u"})// codigo por si falla la peticion a la base de datos
-  });
-}
+    let id = req.body.id;
+    BookModel
+    .deleteOne({_id: id})
+    .then( data => {
+      res.status(200).send({message: "Se ha borrado el libro :)"}); // codigo para cuando se borra el libro
+    })
+    .catch( err => {
+      res.status(500).send({message: "Morí borrando libros u.u"})// codigo por si falla la peticion a la base de datos
+    });
+  },
+  auth: ('/auth/signin', (req, res) => {
+    if (!(req.body.usuario && req.body.palabramagica)){
+        res.status(400).send('Ya deja de llegar aqui por favor :(')
+    }
+    //aqui se debe revisar si un usuario existe en la base de datos
+    jwt.sign({user: req.body.usuario, theme: 'black' }, Llave, function(err, token) {
+        if(err) {
+            res.send(500).end('Noup');
+        } else {
+            res.status(200).send({token: token})
+        }
+    })
+})
 };
 
 module.exports = BooksController;
