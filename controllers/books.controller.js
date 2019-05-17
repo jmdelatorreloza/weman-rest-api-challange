@@ -77,13 +77,29 @@ BookModel
 })
 .then( data => {
   // codigo para cuando se actualiza el libro
-  res.status(200).send({data: data}).end();
+  res.status(201).send({data: data}).end();
 })
 .catch( err => {
   // codigo por si falla la peticion a la base de datos
   res.status(400).send({mensaje: "No se actualizó"});
 })
+},
+
+// Borrar un libro
+borrarunlibro: (req, res) => {
+  const id = req.body.id;
+BookModel
+.deleteOne({_id: id})
+.then( data => {
+  // codigo para cuando se borra el libro
+  res.status(200).send({data: data}).end();
+})
+.catch( err => {
+  // codigo por si falla la peticion a la base de datos
+  res.status(400).send({mensaje: "No se borró el libro"});
+});
 }
+
 
 };
 
