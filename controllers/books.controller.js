@@ -35,6 +35,20 @@ const BooksController = {
     } else {
       res.status(400).send({message: "Manda title, author y pageNumber para crear un libro"});
     }
+  },
+  readBook: (req, res) => {
+    BookModel
+    .findOne({_id: req.params.id})
+    .then( data => {
+      if(data) {
+        res.status(200).send({data}).end();
+      } else {
+        res.status(404).send({message: "No esta ese libro"}).end();
+      }
+    })
+    .catch( err => {
+      res.status(500).send({message: "Ya valio maiz"}).end();
+    });
   }
 };
 
