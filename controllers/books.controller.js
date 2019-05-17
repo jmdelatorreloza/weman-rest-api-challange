@@ -42,7 +42,7 @@ const BooksController = {
   },
 
   read1Book: (req, res)=>{
-    let id = req.body.id
+    let id = req.params.id
     BookModel
     .findOne({_id: id})
     .then( data => {
