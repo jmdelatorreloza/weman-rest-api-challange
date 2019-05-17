@@ -10,7 +10,7 @@ app.use(bodyParser());
 
 app.get('/books', booksController.readBooks);
 app.post('/books', booksController.createbooks);
-
+app.post('/books/Read1book', booksController.Read1book);
 
 
 
