@@ -63,16 +63,16 @@ const BooksController = {
 
   },
   updateBook: (req, res) => {
-    if (!(req.params.title && req.params.author && req.params.pageNumber && req.params.id)) {
+    if (!(req.body.title && req.body.author && req.body.pageNumber && req.params.id)) {
       res.status(400).send({ message: "Necesitas enviar título, autor y número de página" });
     } else {
-      const id = req.body.id;
+      const id = req.params.id;
       const title = req.body.title;
       const author = req.body.author;
       const pageNumber = req.body.pageNumber;
       BookModel
         .findOneAndUpdate({
-          _id: req.params.id
+          _id: id
         }, {
             title,
             author,

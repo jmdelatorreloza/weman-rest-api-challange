@@ -5,9 +5,13 @@ const db = require('./db');
 const bodyParser = require('body-parser');
 const booksController = require('./controllers/books.controller');
 const authController = require('./controllers/auth.controller');
+const authMiddleware = require('./middlewares/auth.middleware');
+
 app.use(bodyParser.json());
 
+
 app.post('/auth/singin', authController.authBook);
+app.use(authMiddleware.authMiddleware);
 app.get('/books', booksController.readBooks);
 app.get('/books/findBook/:id', booksController.readABook);
 app.post('/books', booksController.createBook);
