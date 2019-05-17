@@ -20,8 +20,5 @@ app.delete("/books", booksController.deleteBooks);
 
 app.post("/auth/signin", booksController.autentifica);
 
-app.use("/auth/signin", booksController.comprueba);
-
-app.get("/pingüinos", booksController.valida);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
