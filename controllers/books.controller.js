@@ -73,6 +73,17 @@ const BooksController = {
         })
     }
   },
+  eraseBook: (req, res) => {
+  let id = req.body.id;
+  BookModel
+  .deleteOne({_id: id})
+  .then( data => {
+   res.status(200).send({message: "Se ha borrado el libro :)"}); // codigo para cuando se borra el libro
+  })
+  .catch( err => {
+    res.status(500).send({message: "Morí borrando libros u.u"})// codigo por si falla la peticion a la base de datos
+  });
+}
 };
 
 module.exports = BooksController;

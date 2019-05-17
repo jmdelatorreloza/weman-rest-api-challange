@@ -11,5 +11,6 @@ app.get('/books', booksController.readBooks);
 app.post ('/books', booksController.createBook);
 app.post('/books/buscar', booksController.readOneBook);
 app.patch('/books', booksController.actualizar);
+app.delete('/books', booksController.eraseBook);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
