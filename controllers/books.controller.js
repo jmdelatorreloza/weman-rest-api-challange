@@ -39,23 +39,48 @@ const BooksController = {
   },
 
   searchBooks: (req, res) => {
-      let id = req.body.id
+    let id = req.body.id
+    BookModel
+    .findOne({_id: id})
+    .then( data => {
+      if(data) {
+      // codigo para cuando encontramos el libro
+        res.status(200).send({data : data}).end();
+      } else {
+      // codigo para cuando no encontramos el libro
+        res.status(400).send({message : "No lo encontramos"});
+      }
+    })
+    .catch( err => {
+      // codigo por si falla la peticion a la base de datos
+      res.status(500).send({error : "La busqueda no funcionó"});
+      });
+    }, 
+
+  backBooks: (req, res) => {
+    if(!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
+      res.status(400).send({error: "Ingresa todos los datos"})
+      } else {
+      const title = req.body.title;
+      const author = req.body.author;
+      const pageNumber = req.body.pageNumber;
+      const id = req.body.id;
       BookModel
-      .findOne({_id: id})
+      .findOneAndUpdate({_id: id}, 
+        {
+        title,
+        author,
+        pageNumber
+      })
       .then( data => {
-        if(data) {
-          // codigo para cuando encontramos el libro
-          res.status(200).send({data : data}).end();
-        } else {
-          // codigo para cuando no encontramos el libro
-          res.status(400).send({message : "No lo encontramos"});
-        }
+        // codigo para cuando se actualiza el libro
+        res.status(201).send({data : data}).end()
       })
       .catch( err => {
-        // codigo por si falla la peticion a la base de datos
-        res.status(500).send({error : "La busqueda no funcionó"});
-      });
-    }
+        res.status(500).send({messagge: "Ya valió D:"})
+      })
+      }    
+  }
   };
 
 

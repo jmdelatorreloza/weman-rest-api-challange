@@ -14,4 +14,6 @@ app.post("/books", booksController.createBooks);
 
 app.post('/books/searchbooks', booksController.searchBooks);
 
+app.patch("/books", booksController.backBooks);
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
