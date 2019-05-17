@@ -1,7 +1,4 @@
 const BookModel = require('../models/books.model');
-var privateKey = "pingüinos";
-var jwt = require("jsonwebtoken");
-
 
 const BooksController = {
   readBooks: (req, res) => {
@@ -51,7 +48,7 @@ const BooksController = {
         res.status(200).send({data : data}).end();
       } else {
       // codigo para cuando no encontramos el libro
-        res.status(400).send({message : "No lo encontramos"});
+        res.status(404).send({message : "No lo encontramos"});
       }
     })
     .catch( err => {
@@ -98,21 +95,7 @@ const BooksController = {
       // codigo por si falla la peticion a la base de datos
     });
   },
-
-  autentifica: (req, res) => {
-     if (!(req.body.user && req.body.pass)){
-        res.status(400).send("se necesita usuario y contraseña")
-    }
-    jwt.sign({ user: req.body.user, theme: 'black' }, privateKey, function(err, token) {
-        if(err) {
-          res.send(500).end();
-        } else {
-          res.status(200).send({token: token})
-        }
-      });
-  },
-
-  };
+};
 
 
 module.exports = BooksController;
