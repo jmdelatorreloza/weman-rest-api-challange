@@ -1,6 +1,7 @@
 const BookModel = require('../models/books.model');
 const bodyParser = require("body-parser");
 
+
 const BooksController = {
   readBooks: (req, res) => {
     BookModel
@@ -39,9 +40,24 @@ const BooksController = {
     }
   },
   readBook: (req, res) => {
-    res.end("Holi");
-  }
+    let id = req.query.id;
+   BookModel
+   .findOne({_id: id})
+   .then( data => {
+     if (data) {
+       res.status(200).send({message:"Lo encontramos! :)"}).end();
+     } else {
+       res.status(400).send({message:"no lo encontramos"}).end();
 
+     }
+   })
+   .catch( err => {
+     res.status(500).send({message:"No sé qué paso, hubo un error :("});
+     ;
+   })
+  }
 };
+
+
 
 module.exports = BooksController;
