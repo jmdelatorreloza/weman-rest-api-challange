@@ -73,7 +73,7 @@ Crear un endpoint con el cual leeremos un libro en base a su ID, si encontramos 
 
 #### crear endpoint para sobre escribir libros
 
-crear un endpoint para remplazar el record de un libro, lo remplazaremo en base a su Id, y como en el endpoint de creacion necesitamos validar que venga "title", "author" y "pageNumber" en caso de que no regresar mensaje de error
+crear un endpoint para remplazar el record de un libro, lo remplazaremos en base a su Id, y como en el endpoint de creación necesitamos validar que venga "title", "author" y "pageNumber" en caso de que no regresar mensaje de error
 
 #### crear endpoint para borrar libros
 

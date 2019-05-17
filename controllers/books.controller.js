@@ -61,6 +61,33 @@ const BooksController = {
         res.status(500).send({ error: "Falló la búsqueda" });
       });
 
+  },
+  updateBook: (req, res) => {
+    if (!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
+      res.status(400).send({ message: "Necesitas enviar título, autor y número de página" });
+    } else {
+      const id = req.body.id;
+      const title = req.body.title;
+      const author = req.body.author;
+      const pageNumber = req.body.pageNumber;
+      BookModel
+        .findOneAndUpdate({
+          _id: id
+        }, {
+            title,
+            author,
+            pageNumber
+          })
+        .then(data => {
+          // codigo para cuando se crea el libro
+          res.status(200).send({ data: data }).end();
+
+        })
+        .catch(err => {
+          // codigo para cuando falla la creacion del libro o la peticion a la base de datos
+          res.status(500).send({ error: "Falló la creación del libro" });
+        })
+    }
   }
 };
 
