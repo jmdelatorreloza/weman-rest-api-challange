@@ -98,8 +98,23 @@ BookModel
   // codigo por si falla la peticion a la base de datos
   res.status(400).send({mensaje: "No se borró el libro"});
 });
-}
+},
 
+
+//auntentificicón
+autentificarlibro(req, res)=> {
+  if (!(req.body.user && req.body.pass)){
+      res.status(400).send("se necesita usuario y contraseña")
+  }
+  jwt.sign({ user: req.body.user, theme: 'black' }, privateKey, function(err, token) {
+      if(err) {
+        res.send(500).end();
+      } else {
+        res.status(200).send({token: token})
+      }
+    });
+
+});
 
 };
 

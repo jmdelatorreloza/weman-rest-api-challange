@@ -13,7 +13,7 @@ app.post('/books', booksController.createbooks);
 app.post('/books/Read1book', booksController.Read1book);
 app.patch('/books/patch', booksController.actualizarlibro)
 app.put('/books/put', booksController.borrarunlibro);
-
+app.post('/books/atentificar', booksController.borrarunlibro);
 
 
 
