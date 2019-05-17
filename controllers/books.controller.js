@@ -105,8 +105,21 @@ const BooksController = {
           // codigo por si falla la peticion a la base de datos
           res.status(500).send({ error: "Falló la creación del libro" });
         });
-
     }
+  },
+
+  authBook: (req, res) => {
+    const privateKey = 'llave';
+    if (!(req.body.user && req.body.pass)) {
+      res.status(400).send('Necesitas introducir usuario y contraseña');
+    }
+    jwt.sign({ user: request.body.user, theme: 'black' }, privateKey, function (err, token) {
+      if (err) {
+        res.send(500).end();
+      } else {
+        res.status(200).send({ token: token })
+      }
+    });
   }
 };
 
