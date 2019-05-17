@@ -35,32 +35,28 @@ const BooksController = {
         });
 
     } else {
-      res.status(400).send({ message: "Manda Libro, Autor, Numero de Página crear libro" }).end()
+      res.status(400).send({ message: "Ingresar Title, Author, pageNumber"}).end()
     }
   },
 
   // Leer un solo libro
-
   read2Books: (req, res) => {
-    let id = ""
     BookModel
-      .findOne({ _id: id })
+      .findOne({ _id: req.params.id })
       .then(data => {
         if (data) {
           // codigo para cuando encontramos el libro
-          res.status(200).send({_id: id }).end()
+          res.status(200).send({ data: data }).end()
         } else {
           // codigo para cuando no encontramos el libro
-          res.status(500).send({ message: "No es posible encontrar el libro" }).end()
+          res.status(404).send({ message: "Error, no es posible encontrar el libro" }).end()
         }
       })
       .catch(err => {
         // codigo por si falla la peticion a la base de datos
-        res.status(400).send({ message: "Lo sentimos, no fué posible encontrar el libro" })
+        res.status(500).send({ message: "Lo sentimos, no fué posible encontrar el libro" }).end()
       });
-
   }
-
-}
+};
 
 module.exports = BooksController;
