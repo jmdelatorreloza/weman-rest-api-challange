@@ -64,7 +64,9 @@ const BooksController = {
       let id = req.params.id
       BookModel
       .findOneAndUpdate({
-        _id:id,
+        _id:id
+      },
+      {
         title,
         author,
         pageNumber
