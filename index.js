@@ -4,23 +4,22 @@ const app = express();
 const port = 3000
 const db = require('./db');
 const booksController = require('./controllers/books.controller');
-const autentifica = require('./controllers/autentifica.controller');
+const authController = require('./controllers/auth.controller');
+const autentMiddleware = require('./middlewares/auth.middleware');
 
 app.use(bodyParser.json());
 
+app.post("/auth/signin", authController.signIn);
+
+app.use(autentMiddleware.authMiddleware);
 
 app.get('/books', booksController.readBooks);
+app.get('/books/searchbooks', booksController.searchBooks);
+
+app.use(autentMiddleware.checkAdmin);
 
 app.post("/books", booksController.createBooks);
-
-app.post('/books/searchbooks', booksController.searchBooks);
-
 app.put("/books", booksController.backBooks);
-
 app.delete("/books", booksController.deleteBooks);
-
-app.post("/auth/signin", booksController.autentifica);
-
-app.use(middle)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

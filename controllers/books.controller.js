@@ -39,34 +39,30 @@ const BooksController = {
   },
 
   searchBooks: (req, res) => {
-    let id = req.body.id
     BookModel
-    .findOne({_id: id})
+    .findOne({_id: req.params.id})
     .then( data => {
       if(data) {
       // codigo para cuando encontramos el libro
         res.status(200).send({data : data}).end();
       } else {
       // codigo para cuando no encontramos el libro
-        res.status(404).send({message : "No lo encontramos"});
+        res.status(404).send({message : "No lo encontramos"}).end();
       }
     })
     .catch( err => {
       // codigo por si falla la peticion a la base de datos
-      res.status(500).send({error : "La busqueda no funcionó"});
+      res.status(500).send({message : "La busqueda no funcionó"}).end();
       });
     }, 
 
   backBooks: (req, res) => {
-    if(!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
-      res.status(400).send({error: "Ingresa todos los datos"})
-      } else {
+    if (req.body.title && req.body.author && req.body.pageNumber && req.params.id) {
       const title = req.body.title;
       const author = req.body.author;
       const pageNumber = req.body.pageNumber;
-      const id = req.body.id;
       BookModel
-      .findOneAndUpdate({_id: id}, 
+      .findOneAndUpdate({_id: req.params.id}, 
         {
         title,
         author,
@@ -74,27 +70,32 @@ const BooksController = {
       })
       .then( data => {
         // codigo para cuando se actualiza el libro
-        res.status(201).send({data : data}).end()
+        res.status(200).send({data}).end();
       })
       .catch( err => {
-        res.status(500).send({messagge: "Ya valió D:"})
+        res.status(500).send({messagge: "Ya valió D:"}).end();
       })
-      }    
+      } else {
+        res.status(400).send({message : "Envía todos los datos solicitados"}).end();
+      }   
   },
 
   deleteBooks: (req, res) => {
-    let id = req.body.id;
+    if (req.params.id) {
     BookModel
-    .deleteOne({_id: id})
+    .deleteOne({_id: req.params.id})
     .then( data => {
-      res.status(200).send({message: "Tú libro ha sido eliminado"});
+      res.status(200).send({message: "Tú libro ha sido eliminado"}).end();
       // codigo para cuando se borra el libro
     })
     .catch( err => {
-      res.status(500).send({message: "Ya valió D:"});
+      res.status(500).send({message: "Ya valió D:"}).end();
       // codigo por si falla la peticion a la base de datos
     });
-  },
+    } else {
+    res.status(400).send({message : "Envía el id"}).end();
+    }
+  } 
 };
 
 
