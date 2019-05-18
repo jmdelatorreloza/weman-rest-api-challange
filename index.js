@@ -1,14 +1,17 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-
+const jwt = require ('jsonwebtoken');
 const app = express()
 const port = 3000
 const db = require('./db');
 const booksController = require('./controllers/books.controller');
+const authController =require('./controllers/auth.controller');
 
 
 
 app.use(bodyParser.json());
+
+app.post('/auth/signin', authController.signIn);
 
 
 app.get('/books', booksController.readBooks);
