@@ -53,26 +53,43 @@ const BooksController = {
     res.status(500).send({message: "La búsqueda falló"}) // Falló la petición
   });    
   },
-  actualizar: (req, res) => {
-    if (!(req.body.title && req.body.author && req.body.pageNumber && req.body.id)) {
-      res.status(400).send({Error: "Aségurate de escribir título, autor y página"});
-    } else {
+  updateBook: (req, res) => {
+    if (!(req.body.title && req.body.author && req.body.pageNumber && req.params.id)) {
       const title = req.body.title;
       const author = req.body.author;
       const pageNumber = req.body.pageNumber;
       const id = req.body.id;
       BookModel
-        .findOneAndUpdate({_id: id}, {
-            title,
-            author,
-            pageNumber
-          })
+        .findOneAndUpdate({
+          _id: id
+        }, {
+          title,
+          author,
+          pageNumber
+        })  
         .then(data => {
-          res.status(200).send({ data: data }).end(); // codigo para cuando se actualiza el libro
+          res.status(200).send({ data }).end(); // codigo para cuando se actualiza el libro
         })
         .catch(err => {
-          res.status(500).send({ message: "Morí actualizando :(" }); // codigo por si falla la peticion a la base de datos
+          res.status(500).send({ message: "No se puede procesar tu solicitud" }); // codigo por si falla la peticion a la base de datos
         })        
+    } else{
+      res.status(400).send({message:"Envía el id, el título, autor y número de páginas para actualizar"})
+    }
+  },
+  deleteBook:(req, res) => {
+    if(req.params.id) {
+        let id = "el id del libro..."
+      BookModel
+      .deleteOne({_id: req.params.id})
+      .then( data => {
+        res.status(200).send({message: "listo, se ha eliminado el libro"})
+      })
+      .catch( err => {
+        res.status(500).send({message: err}).end();
+      });  
+    } else{
+      res.status(400).send({message:"debes enviar el id para saber qué libro borrar"})
     }
   }   
 };
