@@ -84,6 +84,22 @@ const BooksController = {
     }
   },
 
+  deleteBook: (req, res)=>{
+    if (req.params.id){
+      BookModel
+      .deleteOne({_id: req.params.id})
+      .then( data => {
+        // codigo para cuando se borra el libro
+        res.status(200).send({mesage:'libro eliminado'})
+      })
+      .catch( err => {
+        // codigo por si falla la peticion a la base de datos
+        res.status(500).send({err:'No se pudo borrar el libro'})
+      });
+    }else{
+      res.status(400).send({mesage:'Para eliminar debes poner el ID del libro'})
+    }
+    }
 };
 
 module.exports = BooksController;
