@@ -51,7 +51,7 @@ El flujo de trabajo sera el siguiente
 - [x] crear endpoint para leer libros
 - [x] crear endpoint para crear libros
 - [x] crear endpoint para leer un libro
-- [ ] crear endpoint para sobre escribir libros
+- [x] crear endpoint para sobre escribir libros
 - [ ] crear endpoint para borrar libros
 - [ ] crear endpoint para autentificarnos
 - [ ] crear middleware para revisar que el token sea valido

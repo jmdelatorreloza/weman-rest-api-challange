@@ -35,7 +35,7 @@ const BooksController = {
         });
 
     } else {
-      res.status(400).send({ message: "Ingresar Title, Author, pageNumber"}).end()
+      res.status(400).send({ message: "Ingresar Title, Author, pageNumber" }).end()
     }
   },
 
@@ -56,7 +56,33 @@ const BooksController = {
         // codigo por si falla la peticion a la base de datos
         res.status(500).send({ message: "Lo sentimos, no fué posible encontrar el libro" }).end()
       });
+  },
+
+  replaceBook: (req, res) => {
+    if (req.body.title && req.body.author && req.body.pageNumber && req.params.id) {
+      // Actualiza un libro
+      const title = req.body.title; 
+      const author = req.body.author; 
+      const pageNumber = req.body.pageNumber; 
+      BookModel
+        .findOneAndUpdate({  //https://mongoosejs.com/docs/deprecations.html#-findandmodi fy- msjencmderypostman
+          _id: req.params.id
+        }, {
+            title,
+            author,
+            pageNumber
+          })
+        .then(data => {
+          // codigo para cuando se actualiza el libro
+        })
+        .catch(err => {
+          // codigo por si falla la peticion a la base de datos
+        })
+    } else {
+      res.status(400).send({message: "Ingresar ID, Title, Author, pageNumber" }).end()
+    }
   }
+
 };
 
 module.exports = BooksController;
