@@ -60,11 +60,11 @@ const BooksController = {
 
   replaceBook: (req, res) => {
     if (req.body.title && req.body.author && req.body.pageNumber && req.params.id) {
-      const title = req.body.title; 
-      const author = req.body.author; 
-      const pageNumber = req.body.pageNumber; 
+      const title = req.body.title;
+      const author = req.body.author;
+      const pageNumber = req.body.pageNumber;
       BookModel
-        .findOneAndUpdate({  //https://mongoosejs.com/docs/deprecations.html#-findandmodi fy- msjencmderypostman
+       .findOneAndUpdate({
           _id: req.params.id
         }, {
             title,
@@ -78,7 +78,22 @@ const BooksController = {
           res.status(500).send({ message: "sorry, not sorry" }).end()
         })
     } else {
-      res.status(400).send({message: "Ingresar ID, Title, Author, pageNumber" }).end()
+      res.status(400).send({ message: "Ingresar ID, Title, Author, pageNumber" }).end()
+    }
+  },
+
+  eliminateBook: (req, res) => {
+    if (req.params.id) {
+      BookModel
+        .deleteOne({ _id: req.params.id })
+        .then(data => {
+          res.status(200).send({ message: "vanished!" }).end()
+        })
+        .catch(err => {
+          res.status(500).send({ message: "KaBOOM!" }).end()
+        });
+    } else {
+      res.status(400).send({ message: "OJO send ID or bye bye book" }).end()
     }
   }
 };
