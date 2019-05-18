@@ -60,7 +60,6 @@ const BooksController = {
 
   replaceBook: (req, res) => {
     if (req.body.title && req.body.author && req.body.pageNumber && req.params.id) {
-      // Actualiza un libro
       const title = req.body.title; 
       const author = req.body.author; 
       const pageNumber = req.body.pageNumber; 
@@ -73,16 +72,16 @@ const BooksController = {
             pageNumber
           })
         .then(data => {
-          // codigo para cuando se actualiza el libro
+          res.status(200).send({ data: data }).end()
         })
         .catch(err => {
-          // codigo por si falla la peticion a la base de datos
+          res.status(500).send({ message: "sorry, not sorry" }).end()
         })
     } else {
       res.status(400).send({message: "Ingresar ID, Title, Author, pageNumber" }).end()
     }
   }
-
 };
+
 
 module.exports = BooksController;
