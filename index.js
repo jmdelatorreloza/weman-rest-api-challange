@@ -6,11 +6,13 @@ const port = 3000
 const db = require('./db');
 const booksController = require('./controllers/books.controller');
 const AuthController = require('./controllers/auth.controller');
-
+const AuthMidleware = require('./middlewares/auth.midleware');
 
 app.use(bodyParser.json());
 
 app.post('/auth/signin', AuthController.signIn);
+
+app.use(AuthMidleware.authmidleware)
 
 app.get('/books', booksController.readBooks);
 app.post('/books', booksController.createbooks);
