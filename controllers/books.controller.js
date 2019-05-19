@@ -2,9 +2,9 @@ const BookModel = require('../models/books.model');
 
 const BooksController = {
 
-  //función para ver TODOS los libros ingresados
+  //1_función para ver TODOS los libros ingresados
   readBooks: (req, res) => {
-    BookModel //hace referencia a la base de datos vía folder moderls
+    BookModel //hace referencia a la base de datos vía folder moderls, se ocupa en las 5 funciones de abajo.
       .find()
       .then(data => {
         if (data.length === 0) {
@@ -14,11 +14,11 @@ const BooksController = {
         }
       })
       .catch(err => {
-        res.status(500).send({ message: "Tronó la Base de Datos! D:" })
+        res.status(500).send({ message: "Algo malo pasó, lo siento." })
       });
   }, //separar funciones adentro de la constante con comas, NO PUNTO Y COMA
 
-  //función para ingresar un libro
+  //2_función para ingresar un libro
   ponerLibroNuevo: (req, res) => {
     if (req.body.title && req.body.author && req.body.pageNumber) {
       const title = req.body.title;
@@ -41,11 +41,11 @@ const BooksController = {
     }
   },
 
-  //función para buscar UN SOLO libro
+  //3_función para buscar UN SOLO libro por medio de su id que te arroja el postman
   leerUnLibro: (req, res) => {
     BookModel
       .findOne({ _id: req.params.identificador })//ojo aquí, es req.params.id y NO req.body.id xq el id lo tomamos de lo que el cliente ponga en url, NO en el body como en la función anterior donde efectivamente ingresábamos los datos en el body.
-      .then(laInfoIngresada => {//ojo el nombre formal de "identificador" (de línea 50 y ('/books/:identificador') de index es id
+      .then(laInfoIngresada => {//ojo el nombre formal de "identificador" es id
         if (laInfoIngresada) {
           res.status(200).send({ data: laInfoIngresada }).send({ message: "Si tenemos el libro, éxito." }).end(); //buscar: como hacer que aparezca este mensaje tambien
         } else {
@@ -53,17 +53,17 @@ const BooksController = {
         }
       })
       .catch(err => {
-        res.status(500).send({ error: "Algo malo pasó y no se pudo buscar el libro, suerte para la próxima" });
+        res.status(500).send({ error: "Algo malo pasó y no se pudo buscar el libro, lo siento." });
       });
   },
   //en postman, abrir una nueva ventana (+)
   //ubicarte en el body
   //cambiar opción a raw (en los radio buttons)
-  //en el radio button binary, cambiar la opción a JSON(application/json) xq ingresamos
-  // ingresar en una pestada diferente a donde dimos post algo así: http://localhost:3000/books/5cdef059ea57900494d8ec57
+  //en el radio button binary, cambiar la opción a JSON(application/json) porque son objetos lo que ingresamos
+  // ingresar en una pestada diferente a donde dimos post algo así: http://localhost:3000/books/elIDarrojadoPorPostmanCuandoDamosUnPost
   //como resultado, nos arrojará en su body el objeto si está ingresado previamente
 
-  //función para cambiar los datos de un libro previamente ingresado por nuevos valores
+  //4_función para cambiar los datos de un libro previamente ingresado, por nuevos valores
   sobreescribirUnLibro: (req, res) => { //nombre formal updateBook
     if (req.body.title && req.body.author && req.body.pageNumber && req.params.id) {
       const title = req.body.title;
@@ -77,44 +77,33 @@ const BooksController = {
             author,
             pageNumber
           })
-        .then(laInfoIngresada => {///AQUÍ HAY UN ERROR
+        .then(data => {
           res.status(200).send({ data = laInfoIngresada }).end();
         })
         .catch(err => {
-          res.status(500).send({ message: "La vida no vale nada" }).end();
+          res.status(500).send({ message: "Algo malo pasó y no se pudo sobre escribir un libro, lo siento." }).end();
         })
     } else {
       res.status(400).send({ message: "No puedo actualizar por que no me mandas bien ID o tittle o author o pageNumber" }).end();
     }
   },
 
-  //función para borrar un libro
+  //5_función para borrar un libro por medio de su id
   borrarUnLibro: (req, res) => {
     if (req.params.id) {
       BookModel
         .deleteOne({ _id: req.params.id })
-        .then(laInfoIngresada => {
+        .then(data => {
           res.status(200).send({ message: "Ya borré el libro, éxito amigo" })
-        ) //AQUÍ HAY OTRO ERROR
+        }) 
         .catch(err => {
-          res.status(500).send({ message: "La vida no vale nada 2.0" }).end();
+          res.status(500).send({ message: "Algo malo pasó y no se pudo borrar el libro, lo siento." }).end();
         });
     } else {
       res.status(400).send({ message: "Manda bien el id or die" })
     }
-  }
-},
-
-  //función para autentificarnos como usuarios
-  
-  //crear middleware para revisar que token sea válido
-  //crear middleware para revisar si un usuario es administrador
-
-
-
-
+  }//sin coma por ser la última función de la constante, éxito.
 };
-
 
 module.exports = BooksController;
 
@@ -124,26 +113,3 @@ module.exports = BooksController;
 
 //Recordar cambiar a la opción BODY en postman y en método POST o GET dependiendo
 //(body se referencía en este archivo así: req.body.author, req.boyd.title, etc) 
-
-
-
-/* esto para ingresar no sirve
- const title = "test", author = "test", pageNumber = "test"
-  createBooks: (req, res) => {
-    BookModel
-    .create({
-      tittle,
-      author,
-      pageNumber
-    })
-    .then(data => {
-      if(data.lenght === 1) {
-        res.status(200).send("Muy bien amigo, añadiste un libro nuevo exitosamente");
-      } else {
-        res.status(400).send({error: "Amigo, tienes que poner libro, autor y número de páginas, ojo ahí."})
-      })
-    .catch(err => {
-      res.status(500).send({message: "Algo no funcionó, perdón vuelva a iniciar"})
-    }
-  )}
-*/
